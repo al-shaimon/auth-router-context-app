@@ -2,8 +2,7 @@ import React, { useContext } from 'react';
 import { AuthContext } from '../contexts/UserContext';
 
 const Login = () => {
-
-  const {signIn} = useContext(AuthContext);
+  const { signIn, signInWithGoogle } = useContext(AuthContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -13,15 +12,23 @@ const Login = () => {
     console.log(email, password);
 
     signIn(email, password)
-    .then(result =>{
-      const user = result.user;
-      console.log(user)
-      form.reset();
-    })
-    .catch(error =>{
-      console.error(error)
-    })
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        form.reset();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
+  const handleGoogleSignIn = () => {
+    signInWithGoogle()
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+      })
+      .catch((error) => console.error(error));
   };
 
   return (
@@ -62,10 +69,14 @@ const Login = () => {
                   </a>
                 </label>
               </div>
+
               <div className="form-control mt-6">
                 <button className="btn btn-primary">Login</button>
               </div>
             </form>
+            <button onClick={handleGoogleSignIn} className="btn btn-outline btn-success">
+              Google
+            </button>
           </div>
         </div>
       </div>
