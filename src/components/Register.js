@@ -18,6 +18,7 @@ const Register = () => {
       .then((result) => {
         const user = result.user;
         console.log('register user', user);
+        form.reset();
       })
       .catch((error) => {
         console.error(error);
